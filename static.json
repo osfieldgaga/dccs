@@ -1,0 +1,81 @@
+{
+  "cpu": {
+    "architecture": "x86_64",
+    "sockets": 1,
+    "physical_cores": 6,
+    "threads_per_core": 2,
+    "threads_total": 12,
+    "base_freq_mhz": 2600.0,
+    "min_freq_mhz": 800.0,
+    "max_freq_mhz": 5000.0,
+    "l1d_kib_per_core": 32,
+    "l1i_kib_per_core": 32,
+    "l2_kib_per_core": 256,
+    "l3_kib_shared": 12288
+  },
+  "ram": {
+    "capacity_gib": 16.0,
+    "type": "DDR4",
+    "rated_speed_mts": 3200,
+    "configured_speed_mts": 2933,
+    "slots_total": 4,
+    "slots_populated": 2,
+    "channels": 2,
+    "channels_method": "locator",
+    "bandwidth_gbs": 46.9,
+    "ecc": false,
+    "swap_gib": 6.61
+  },
+  "gpu": [
+    {
+      "index": 0,
+      "model": "NVIDIA GeForce GTX 1660 Ti",
+      "compute_capability": "7.5",
+      "sm_count": 24,
+      "cuda_cores": 1536,
+      "max_sm_clock_mhz": 2100,
+      "max_mem_clock_mhz": 6001,
+      "vram_gib": 6.0,
+      "bus_width_bits": 192,
+      "bandwidth_gbs_est": 288.0,
+      "power_default_w": 80.0,
+      "power_max_w": 95.0,
+      "pcie_max_gen": 3,
+      "pcie_max_width": 16,
+      "pcie_ceiling_gbs": 15.75,
+      "driver_version": "550.163.01",
+      "cuda_driver_version": "12.4",
+      "vbios": "90.16.4A.00.69"
+    }
+  ],
+  "storage": {
+    "path": "/media/osfield/Data/Kettering/_Academics/Fall 26/Thesis/Code",
+    "device": "/dev/nvme1n1p2",
+    "filesystem": "ntfs3",
+    "mount_options": "rw,nosuid,nodev,relatime,uid=1000,gid=1000,iocharset=utf8",
+    "encrypted_luks": false,
+    "fs_total_gib": 803.5,
+    "fs_free_gib_at_collection": 53.3,
+    "type": "NVMe SSD",
+    "model": "CT1000P2SSD8",
+    "firmware": "P2CR048",
+    "disk_capacity_gib": 931.5,
+    "interface": "nvme",
+    "link": {
+      "pcie_max_gen": 3,
+      "pcie_max_width": 4,
+      "pcie_current_gen": 3,
+      "pcie_current_width": 4,
+      "link_ceiling_gbs": 3.94
+    }
+  },
+  "software": {
+    "os": "Linux-6.12.107+deb13-amd64-x86_64-with-glibc2.41",
+    "kernel": "6.12.107+deb13-amd64",
+    "python": "3.13.5",
+    "cpu_governor": "powersave",
+    "intel_pstate_status": "active",
+    "cpu_turbo_disabled": "0",
+    "nvcc": null
+  }
+}
