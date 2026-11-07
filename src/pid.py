@@ -3,6 +3,8 @@ from utils import bytes2MB, safe_call
 from csv_logger import log_sensors
 from datetime import datetime
 import pprint
+import time
+from dynamic_metrics import compute_dccs
 
 # set once when the script starts, all logs of this session go to logs/<SESSION_STAMP>/
 SESSION_STAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -19,13 +21,15 @@ except Exception as e:
 # a specific process name may be tied to multiple PIDs
 # We care about the overall utilization for all PIDs under one process name
 # TODO: fill these with actual process names
-lidar_processes = ['code', 'Xorg']
-camera_processes = ['chrome']
+lidar_processes = ['cepton_publishe', 'cepton_subscrib']
+camera_processes = ['camera_driver_n']
 gps_processes = ['zotero-bin']
-radar_processes = ['MATLAB']
+radar_processes = ['']
 
 # TODO: in scripts that process images, colelct the PIDS for each one into a shared file or over ROS then append it
 #
+
+
 
 
 def get_pids_gpu(pids):
@@ -65,7 +69,7 @@ def get_pids_gpu(pids):
         
         
         for idx, proc in enumerate(all_processes_vram):
-            print(proc)
+            # print(proc)
 
             
             if proc.pid in pids:
@@ -105,94 +109,113 @@ def get_pids_by_process(process_name):
 
     return pids
 
+init_dt = time.monotonic_ns()
+last_dt = 0
+dt = 0
 
-try: 
 
-    # print("Name:", p.name())
-    # print("Status:", p.status())
-    # print("CPU %:", p.cpu_percent(interval=0.1))
-    # print("Memory Info:", p.memory_info())
-    # print("Command line:", p.cmdline())
+while True:
+    if (dt - last_dt >= 1000000000): # log every second
+        try: 
 
-    # print("Reverting VS Code PIDs")
+            last_dt = time.monotonic_ns()
 
-    lidar_pids = []
-    camera_pids = []
-    gps_pids = []
-    radar_pids = []
+            # print("Name:", p.name())
+            # print("Status:", p.status())
+            # print("CPU %:", p.cpu_percent(interval=0.1))
+            # print("Memory Info:", p.memory_info())
+            # print("Command line:", p.cmdline())
 
-    for lidar_process in lidar_processes:
-        lidar_pids += get_pids_by_process(lidar_process)
+            # print("Reverting VS Code PIDs")
 
-    for camera_process in camera_processes:
-        camera_pids += get_pids_by_process(camera_process)
+            lidar_pids = []
+            camera_pids = []
+            gps_pids = []
+            radar_pids = []
 
-    for gps_process in gps_processes:
-        gps_pids += get_pids_by_process(gps_process)
+            for lidar_process in lidar_processes:
+                lidar_pids += get_pids_by_process(lidar_process)
 
-    for radar_process in radar_processes:
-        radar_pids += get_pids_by_process(radar_processes)
+            for camera_process in camera_processes:
+                camera_pids += get_pids_by_process(camera_process)
 
-    lidar_util = {'pids': lidar_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
-    camera_util = {'pids': camera_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
-    gps_util = {'pids': gps_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
-    radar_util = {'pids': radar_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
+            for gps_process in gps_processes:
+                gps_pids += get_pids_by_process(gps_process)
 
-    for pid in lidar_pids:
-        p = psutil.Process(pid)
-        
-        p_rss = p.memory_info().rss
-        p_cpu = p.cpu_percent(interval=0.0)
-        lidar_util['ram'] += bytes2MB(p_rss)
-        lidar_util['cpu'] += p_cpu
+            for radar_process in radar_processes:
+                radar_pids += get_pids_by_process(radar_processes)
 
-    lidar_util['gpu'] = get_pids_gpu(lidar_pids)
+            lidar_util = {'pids': lidar_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
+            camera_util = {'pids': camera_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
+            gps_util = {'pids': gps_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
+            radar_util = {'pids': radar_pids, 'ram': 0, 'cpu': 0, 'gpu': 0}
 
-    for pid in camera_pids:
-        p = psutil.Process(pid)
-        
-        p_rss = p.memory_info().rss
-        p_cpu = p.cpu_percent(interval=0.0)
-        camera_util['ram'] += bytes2MB(p_rss)
-        camera_util['cpu'] += p_cpu
+            for pid in lidar_pids:
+                p = psutil.Process(pid)
+                
+                p_rss = p.memory_info().rss
+                p_cpu = p.cpu_percent(interval=0.0)
+                lidar_util['ram'] += bytes2MB(p_rss)
+                lidar_util['cpu'] += p_cpu
 
-    camera_util['gpu'] = get_pids_gpu(camera_pids)
+            lidar_util['gpu'] = get_pids_gpu(lidar_pids)
 
-    for pid in gps_pids:
-        p = psutil.Process(pid)
-        
-        p_rss = p.memory_info().rss
-        p_cpu = p.cpu_percent(interval=0.0)
-        gps_util['ram'] += bytes2MB(p_rss)
-        gps_util['cpu'] += p_cpu
+            for pid in camera_pids:
+                p = psutil.Process(pid)
+                
+                p_rss = p.memory_info().rss
+                p_cpu = p.cpu_percent(interval=0.0)
+                camera_util['ram'] += bytes2MB(p_rss)
+                camera_util['cpu'] += p_cpu
 
-    gps_util['gpu'] = get_pids_gpu(gps_pids)
+            camera_util['gpu'] = get_pids_gpu(camera_pids)
 
-    for pid in radar_pids:
-        p = psutil.Process(pid)
-        
-        p_rss = p.memory_info().rss
-        p_cpu = p.cpu_percent(interval=0.0)
-        radar_util['ram'] += bytes2MB(p_rss)
-        radar_util['cpu'] += p_cpu
+            for pid in gps_pids:
+                p = psutil.Process(pid)
+                
+                p_rss = p.memory_info().rss
+                p_cpu = p.cpu_percent(interval=0.0)
+                gps_util['ram'] += bytes2MB(p_rss)
+                gps_util['cpu'] += p_cpu
 
-    radar_util['gpu'] = get_pids_gpu(radar_pids)
+            gps_util['gpu'] = get_pids_gpu(gps_pids)
 
-    print("LiDAR:")
-    pprint.pprint(lidar_util)
-    print("\nCam:")
-    pprint.pprint(camera_util)
-    print("\nGPS:")
-    pprint.pprint(gps_util)
-    print("\nRadar:")
-    pprint.pprint(radar_util)
+            for pid in radar_pids:
+                p = psutil.Process(pid)
+                
+                p_rss = p.memory_info().rss
+                p_cpu = p.cpu_percent(interval=0.0)
+                radar_util['ram'] += bytes2MB(p_rss)
+                radar_util['cpu'] += p_cpu
 
-    log_sensors(SESSION_STAMP, lidar=lidar_util, camera=camera_util, gps=gps_util, radar=radar_util)
+            radar_util['gpu'] = get_pids_gpu(radar_pids)
 
 
 
-    # pmem = p.memory_info()
-    # print(bytes2MB(pmem.rss))
 
-except psutil.Error as e:
-    print("Error", e)
+            print("LiDAR:")
+            pprint.pprint(lidar_util)
+            print("\nCam:")
+            pprint.pprint(camera_util)
+            print("\nGPS:")
+            pprint.pprint(gps_util)
+            print("\nRadar:")
+            pprint.pprint(radar_util)
+
+            metrics, dccs = compute_dccs()
+            dccs_r = round(dccs * 100, 2)/100
+
+            log_sensors(SESSION_STAMP, metrics=metrics, dccs=dccs_r, lidar=lidar_util, camera=camera_util, gps=gps_util, radar=radar_util)
+
+            
+
+            # pmem = p.memory_info()
+            # print(bytes2MB(pmem.rss))
+
+
+
+        except psutil.Error as e:
+            print("Error", e)
+
+
+    dt = time.monotonic_ns()
