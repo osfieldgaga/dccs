@@ -20,14 +20,22 @@ except Exception as e:
 # Define the names of the processes associated with the sensors
 # a specific process name may be tied to multiple PIDs
 # We care about the overall utilization for all PIDs under one process name
+
 # TODO: fill these with actual process names
-lidar_processes = ['cepton_publishe', 'cepton_subscrib']
-camera_processes = ['camera_driver_n']
-gps_processes = ['zotero-bin']
+
+lidar_processes = ['cepton_publisher_node', 'cepton_subscriber_node']
+camera_processes = ['camera_driver_node']
+gps_processes = ['novatel_oem7_driver_exe']
 radar_processes = ['']
 
+
+utilities_processes = ['']
+
 # TODO: in scripts that process images, colelct the PIDS for each one into a shared file or over ROS then append it
-#
+
+
+# TODO: A ROS node to log the current perfs of each sensor (point cloud density, camera resolution etc)
+# TODO: log the computational footprint of the utilities (MATLAB, this script)
 
 
 
@@ -98,6 +106,9 @@ def get_pids_by_process(process_name):
 
     try: 
         for process in psutil.process_iter(['pid', 'name']):
+
+                # if process_name in process.info['name']:
+                    # print(process.info)
         
                 if process_name == process.info['name']:
                     pids.append(process.info['pid'])
@@ -154,7 +165,7 @@ while True:
                 p = psutil.Process(pid)
                 
                 p_rss = p.memory_info().rss
-                p_cpu = p.cpu_percent(interval=0.0)
+                p_cpu = p.cpu_percent(interval=0.2)
                 lidar_util['ram'] += bytes2MB(p_rss)
                 lidar_util['cpu'] += p_cpu
 
@@ -164,7 +175,7 @@ while True:
                 p = psutil.Process(pid)
                 
                 p_rss = p.memory_info().rss
-                p_cpu = p.cpu_percent(interval=0.0)
+                p_cpu = p.cpu_percent(interval=0.2)
                 camera_util['ram'] += bytes2MB(p_rss)
                 camera_util['cpu'] += p_cpu
 
@@ -174,7 +185,7 @@ while True:
                 p = psutil.Process(pid)
                 
                 p_rss = p.memory_info().rss
-                p_cpu = p.cpu_percent(interval=0.0)
+                p_cpu = p.cpu_percent(interval=0.2)
                 gps_util['ram'] += bytes2MB(p_rss)
                 gps_util['cpu'] += p_cpu
 
@@ -184,7 +195,7 @@ while True:
                 p = psutil.Process(pid)
                 
                 p_rss = p.memory_info().rss
-                p_cpu = p.cpu_percent(interval=0.0)
+                p_cpu = p.cpu_percent(interval=0.2)
                 radar_util['ram'] += bytes2MB(p_rss)
                 radar_util['cpu'] += p_cpu
 

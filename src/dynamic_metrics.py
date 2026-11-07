@@ -49,7 +49,7 @@ def compute_dccs():
 
     metrics["cpu"] = {
                 "cpu_freq_mhz": round(psutil.cpu_freq().current, 2),
-                "cpu_utilization_pct": psutil.cpu_percent(),
+                "cpu_utilization_pct": psutil.cpu_percent(interval=0.2),
                 "cpu_temp_c": psutil.sensors_temperatures()['coretemp'][0].current,
                 "cpu_power_w": cpu_power_w,
                 "cpu_throttling": "TBD",

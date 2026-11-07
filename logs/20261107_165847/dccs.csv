@@ -1,0 +1,6 @@
+timestamp,dccs,ram_util_mb,ram_avail_mb,ram_swap_mb,cpu_freq_mhz,cpu_utilization_pct,cpu_temp_c,cpu_power_w,params_used
+2026-11-07T16:58:47.318,0.12480000000000001,4323.02734375,27480.71875,0.0,1686.92,6.4,33.0,0,"cpu_freq_mhz_norm, cpu_utilization_pct_norm, gpu_mem_clock_mhz_norm, gpu_mem_pct_norm, gpu_pct_norm, gpu_sm_clock_mhz_norm, gpu_vram_mib_norm"
+2026-11-07T16:58:48.286,0.11289999999999999,4315.51953125,27488.2265625,0.0,1790.61,6.1,33.0,0,"cpu_freq_mhz_norm, cpu_utilization_pct_norm, gpu_mem_clock_mhz_norm, gpu_mem_pct_norm, gpu_pct_norm, gpu_sm_clock_mhz_norm, gpu_vram_mib_norm"
+2026-11-07T16:58:49.291,0.1267,4314.37109375,27489.375,0.0,1854.31,6.0,35.0,0,"cpu_freq_mhz_norm, cpu_utilization_pct_norm, gpu_mem_clock_mhz_norm, gpu_mem_pct_norm, gpu_pct_norm, gpu_sm_clock_mhz_norm, gpu_vram_mib_norm"
+2026-11-07T16:58:50.291,0.1353,4318.2890625,27485.45703125,0.0,2052.38,6.3,35.0,0,"cpu_freq_mhz_norm, cpu_utilization_pct_norm, gpu_mem_clock_mhz_norm, gpu_mem_pct_norm, gpu_pct_norm, gpu_sm_clock_mhz_norm, gpu_vram_mib_norm"
+2026-11-07T16:58:51.291,0.1119,4317.0078125,27486.73828125,0.0,1782.3,5.7,35.0,0,"cpu_freq_mhz_norm, cpu_utilization_pct_norm, gpu_mem_clock_mhz_norm, gpu_mem_pct_norm, gpu_pct_norm, gpu_sm_clock_mhz_norm, gpu_vram_mib_norm"
