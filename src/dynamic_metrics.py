@@ -6,14 +6,12 @@ from pathlib import Path
 
 from utils import read_sysfs, collect_live_gpu
 
+specs = json.loads(Path("./static.json").read_text())
+
 def compute_dccs():
-
-
-    specs = json.loads(Path("./static.json").read_text())
 
     metrics = {}
 
-    power_cnt_ms = 0
     power_last_time_ns = 0;
     prev_w_uj = 0;
     PWR_REFRESH_RATE_MS = 1000

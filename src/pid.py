@@ -4,7 +4,7 @@ from csv_logger import log_sensors
 from datetime import datetime
 import pprint
 import time
-from dynamic_metrics import compute_dccs
+from dynamic_metrics import compute_dccs, specs
 
 # set once when the script starts, all logs of this session go to logs/<SESSION_STAMP>/
 SESSION_STAMP = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -28,6 +28,9 @@ camera_processes = ['camera_driver_node']
 gps_processes = ['novatel_oem7_driver_exe']
 radar_processes = ['']
 
+CAPTURE_PERIOD_MS = 1000
+
+CAPTURE_PERIOD_NS = CAPTURE_PERIOD_MS *1000000 # don't change
 
 utilities_processes = ['']
 
@@ -126,7 +129,7 @@ dt = 0
 
 
 while True:
-    if (dt - last_dt >= 1000000000): # log every second
+    if (dt - last_dt >= CAPTURE_PERIOD_NS): # log every second
         try: 
 
             last_dt = time.monotonic_ns()
@@ -170,6 +173,7 @@ while True:
                 lidar_util['cpu'] += p_cpu
 
             lidar_util['gpu'] = get_pids_gpu(lidar_pids)
+            lidar_util["cpu_overall"] = round(lidar_util['cpu'] / specs['cpu']['threads_total'], 2)
 
             for pid in camera_pids:
                 p = psutil.Process(pid)
@@ -180,6 +184,7 @@ while True:
                 camera_util['cpu'] += p_cpu
 
             camera_util['gpu'] = get_pids_gpu(camera_pids)
+            camera_util["cpu_overall"] = round(camera_util['cpu'] / specs['cpu']['threads_total'], 2)
 
             for pid in gps_pids:
                 p = psutil.Process(pid)
@@ -190,6 +195,7 @@ while True:
                 gps_util['cpu'] += p_cpu
 
             gps_util['gpu'] = get_pids_gpu(gps_pids)
+            gps_util["cpu_overall"] = round(gps_util['cpu'] / specs['cpu']['threads_total'], 2)
 
             for pid in radar_pids:
                 p = psutil.Process(pid)
@@ -200,6 +206,7 @@ while True:
                 radar_util['cpu'] += p_cpu
 
             radar_util['gpu'] = get_pids_gpu(radar_pids)
+            radar_util["cpu_overall"] = round(radar_util['cpu'] / specs['cpu']['threads_total'], 2)
 
 
 

@@ -4,7 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 LOG_ROOT = Path(__file__).resolve().parent.parent / "logs"
-FIELDS = ["timestamp", "pids", "ram", "cpu", "gpu_vram", "gpu_sm"]
+FIELDS = ["timestamp", "pids", "ram", "cpu", "cpu_overall", "gpu_vram", "gpu_sm"]
 
 DCCS_FIELDS = ["timestamp", "dccs", "ram_util_mb", "ram_avail_mb", "ram_swap_mb",
                 "cpu_freq_mhz", "cpu_utilization_pct", "cpu_temp_c", "cpu_power_w", "params_used"]
@@ -31,6 +31,7 @@ def log_sensors(session_stamp, dccs, metrics=None, **sensors):
                 "pids": " ".join(map(str, util["pids"])),
                 "ram": util["ram"],
                 "cpu": util["cpu"],
+                "cpu_overall": util["cpu_overall"],
                 "gpu_vram": gpu.get("vram", 0),
                 "gpu_sm": gpu.get("sm", 0),
             })

@@ -1,0 +1,2 @@
+timestamp,pids,ram,cpu,cpu_overall,gpu_vram,gpu_sm
+2026-11-09T12:42:24.080,7529 7540,59.83,20.0,"(0.8333333333333334,)",0,0
