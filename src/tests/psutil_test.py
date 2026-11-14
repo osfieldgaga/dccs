@@ -1,5 +1,6 @@
 import psutil
 import time
+from pid import get_pids_by_process
 
 
 ## Sanity tests for psutil
@@ -14,3 +15,5 @@ while True:
         last_dt = dt
 
         print(psutil.cpu_percent(interval=1))
+
+        

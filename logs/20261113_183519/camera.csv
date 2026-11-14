@@ -1,0 +1,4 @@
+timestamp,pids,ram,cpu,cpu_overall,gpu_vram,gpu_sm,sensor_stamp_ns,width,height,npixels,encoding,step,is_bigendian,img_size_bytes,hz,hz_stamp
+2026-11-13T18:35:21.045,193517,217.34,44.9,1.87,0,0,,,,,,,,,,
+2026-11-13T18:35:22.241,193517,217.34,39.9,1.66,0,0,,,,,,,,,,
+2026-11-13T18:35:23.428,193517,217.34,39.9,1.66,0,0,,,,,,,,,,
