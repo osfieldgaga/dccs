@@ -1,0 +1,81 @@
+{
+  "cpu": {
+    "architecture": "x86_64",
+    "sockets": 1,
+    "physical_cores": 12,
+    "threads_per_core": 2,
+    "threads_total": 24,
+    "base_freq_mhz": 3500.0,
+    "min_freq_mhz": 1200.0,
+    "max_freq_mhz": 4800.0,
+    "l1d_kib_per_core": 32,
+    "l1i_kib_per_core": 32,
+    "l2_kib_per_core": 1024,
+    "l3_kib_shared": 19763
+  },
+  "ram": {
+    "capacity_gib": 31.1,
+    "type": null,
+    "rated_speed_mts": null,
+    "configured_speed_mts": null,
+    "slots_total": null,
+    "slots_populated": null,
+    "channels": null,
+    "channels_method": null,
+    "bandwidth_gbs": null,
+    "ecc": null,
+    "swap_gib": 2.0
+  },
+  "gpu": [
+    {
+      "index": 0,
+      "model": "NVIDIA GeForce RTX 4060 Ti",
+      "compute_capability": "8.9",
+      "sm_count": 34,
+      "cuda_cores": 4352,
+      "max_sm_clock_mhz": 3105,
+      "max_mem_clock_mhz": 9001,
+      "vram_gib": 16.0,
+      "bus_width_bits": 128,
+      "bandwidth_gbs_est": 288.0,
+      "power_default_w": 165.0,
+      "power_max_w": 176.0,
+      "pcie_max_gen": 3,
+      "pcie_max_width": 8,
+      "pcie_ceiling_gbs": 7.88,
+      "driver_version": "580.178.04",
+      "cuda_driver_version": "13.0",
+      "vbios": "95.06.34.00.86"
+    }
+  ],
+  "storage": {
+    "path": "/home/autodrive/Desktop/Code",
+    "device": "/dev/nvme0n1p2",
+    "filesystem": "ext4",
+    "mount_options": "rw,relatime,errors=remount-ro",
+    "encrypted_luks": false,
+    "fs_total_gib": 467.9,
+    "fs_free_gib_at_collection": 2.4,
+    "type": "NVMe SSD",
+    "model": "MTFDHBK512TDP",
+    "firmware": "MU04.3",
+    "disk_capacity_gib": 476.9,
+    "interface": "nvme",
+    "link": {
+      "pcie_max_gen": 3,
+      "pcie_max_width": 4,
+      "pcie_current_gen": 3,
+      "pcie_current_width": 4,
+      "link_ceiling_gbs": 3.94
+    }
+  },
+  "software": {
+    "os": "Linux-6.8.0-124-generic-x86_64-with-glibc2.35",
+    "kernel": "6.8.0-124-generic",
+    "python": "3.10.12",
+    "cpu_governor": "powersave",
+    "intel_pstate_status": "active",
+    "cpu_turbo_disabled": "0",
+    "nvcc": null
+  }
+}
